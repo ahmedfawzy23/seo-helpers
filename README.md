@@ -6,20 +6,20 @@ This project focuses on giving any Laravel model (or static page) a consistent S
 
 ## Features
 
-- Polymorphic SEO metadata per model or static page via `HasSeo` and `HasStaticSeo` traits.
-- Meta title, description, Open Graph image, and extensible `extra_meta` storage with sensible fallbacks to model fields or the app name.
-- Script/FAQ management with JSON and JSON-LD generation helpers.
-- Redirect registry with active filtering, hit counting, and normalization helpers.
-- Single migration that provisions `seo_metadata`, `scripts`, and `redirects` tables.
+-   Polymorphic SEO metadata per model or static page via `HasSeo` and `HasStaticSeo` traits.
+-   Meta title, description, Open Graph image, and extensible `extra_meta` storage with sensible fallbacks to model fields or the app name.
+-   Script/FAQ management with JSON and JSON-LD generation helpers.
+-   Redirect registry with active filtering, hit counting, and normalization helpers.
+-   Single migration that provisions `seo_metadata`, `scripts`, and `redirects` tables.
 
 ## Architecture & Data Model
 
-- `seo_metadata` stores meta title/description, OG image, and custom meta for any `seoable` morph target or a static `page_title` (`database/migrations/2025_11_18_102650_create_seo_base_tables.php`).
-- `scripts` stores arbitrary scripts or FAQ JSON for any `scriptable` morph target or static `page_title` (same migration).
-- `redirects` tracks `from_url` → `to_url` mappings with status code, hit counter, and active flag.
-- Relationships live in traits so models stay lean:
-  - `HasSeo` adds `seo()` and `scripts()` morph relations plus convenience getters/fallbacks (`app/Traits/HasSeo.php`).
-  - `HasStaticSeo` enables the same API for static pages that have no database model (`app/Traits/HasStaticSeo.php`).
+-   `seo_metadata` stores meta title/description, OG image, and custom meta for any `seoable` morph target or a static `page_title` (`database/migrations/2025_11_18_102650_create_seo_base_tables.php`).
+-   `scripts` stores arbitrary scripts or FAQ JSON for any `scriptable` morph target or static `page_title` (same migration).
+-   `redirects` tracks `from_url` → `to_url` mappings with status code, hit counter, and active flag.
+-   Relationships live in traits so models stay lean:
+    -   `HasSeo` adds `seo()` and `scripts()` morph relations plus convenience getters/fallbacks (`app/Traits/HasSeo.php`).
+    -   `HasStaticSeo` enables the same API for static pages that have no database model (`app/Traits/HasStaticSeo.php`).
 
 ## Project Structure
 
@@ -32,16 +32,13 @@ app/
   Traits/
     HasSeo.php            # Attach SEO + scripts to Eloquent models
     HasStaticSeo.php      # Static page SEO/scripts helpers
-bootstrap/                # Laravel bootstrap files
-config/                   # Framework config
 database/
   migrations/2025_11_18_102650_create_seo_base_tables.php  # SEO + scripts + redirects schema
-routes/web.php            # Default welcome route
 ```
 
 ## Getting Started
 
-Requirements: PHP 8.2+, Composer, and a database supported by Laravel. Node.js is only needed if you plan to build front-end assets.
+Requirements: PHP 8.2 or higher, Composer, and a database supported by Laravel.
 
 ```bash
 git clone <repo-url>
@@ -50,22 +47,12 @@ composer install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
-
-# Optional front-end build
-npm install
-npm run build
 ```
 
 Run the app locally:
 
 ```bash
 php artisan serve
-```
-
-Run the test suite:
-
-```bash
-php artisan test
 ```
 
 ## Usage Examples
@@ -180,13 +167,17 @@ $activeRedirects = Redirect::active()->get(); // Only active redirects
 ## Contribution
 
 1. Fork and create a feature branch.
-2. Run `php artisan test` to ensure the suite passes.
+2. Make changes and commit.
 3. Open a pull request that describes the change and any schema updates.
 
 ## License
 
-Licensed under the MIT License. See `composer.json` for the declared license.
+Licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Maintainer
 
-Maintained by the DB Business / Digital Bond Mena team. For questions or support, please open an issue on the repository.
+## Author
+
+[Ahmed Fawzy](https://github.com/ahmedfawzy23)
+
+Made with ❤ in [Digital Bonds](https://digitalbondmena.com), Egypt.
